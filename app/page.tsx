@@ -11,7 +11,7 @@ import {
 interface Message {
   role: 'user' | 'bot';
   content: string;
-  context?: any[];
+  references?: string[];
 }
 
 export default function Home() {
@@ -75,7 +75,7 @@ export default function Home() {
       const botMessage: Message = { 
         role: 'bot', 
         content: data.answer,
-        context: data.context 
+        references: data.references 
       };
       setMessages(prev => [...prev, botMessage]);
     } catch (err) {
