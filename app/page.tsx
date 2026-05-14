@@ -3,9 +3,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Zap, Plus, MessageSquare, Package, Bookmark, BarChart2, 
-  Settings, HelpCircle, Moon, Sun, MoreVertical, 
-  Headphones, Send, User, Bot, Database, Loader2, Quote, ChevronDown,
-  Activity, Battery, Mic, Sparkles, Search
+  Settings, HelpCircle, Moon, Sun, 
+  Send, User, Bot, Database, Loader2,
+  Activity, Battery, Sparkles, Search
 } from 'lucide-react';
 
 interface Message {
@@ -45,9 +45,9 @@ export default function Home() {
         const errorMsg = data?.error || data?.message || '알 수 없는 오류가 발생했습니다.';
         alert('인덱싱 실패: ' + errorMsg);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      alert('인덱싱 중 오류가 발생했습니다: ' + err.message);
+      alert('인덱싱 중 오류가 발생했습니다: ' + (err instanceof Error ? err.message : String(err)));
     } finally {
       setIsIndexing(false);
     }
@@ -174,17 +174,17 @@ export default function Home() {
                 <div className="card" onClick={() => sendMessage('운동할 때 써도 되나요?')}>
                   <div className="card-icon"><Activity size={20} /></div>
                   <h4>운동용 적합성</h4>
-                  <p>"땀에 강한지, 격한 움직임에도 잘 안 빠지는지 궁금해요."</p>
+                  <p>&quot;땀에 강한지, 격한 움직임에도 잘 안 빠지는지 궁금해요.&quot;</p>
                 </div>
                 <div className="card" onClick={() => sendMessage('배터리 성능이 광고만큼 나오나요?')}>
                   <div className="card-icon"><Battery size={20} /></div>
                   <h4>배터리 성능</h4>
-                  <p>"실제 사용 시 배터리가 얼마나 가는지 알고 싶어요."</p>
+                  <p>&quot;실제 사용 시 배터리가 얼마나 가는지 알고 싶어요.&quot;</p>
                 </div>
                 <div className="card" onClick={() => sendMessage('통화 품질은 어떤가요?')}>
                   <div className="card-icon"><MessageSquare size={20} /></div>
                   <h4>통화 품질</h4>
-                  <p>"소음이 많은 곳에서도 통화가 잘 들리는지 궁금해요."</p>
+                  <p>&quot;소음이 많은 곳에서도 통화가 잘 들리는지 궁금해요.&quot;</p>
                 </div>
               </div>
             </section>
@@ -201,7 +201,7 @@ export default function Home() {
                       <div className="references">
                         <div className="reference-tag"><Search size={12} /> 관련 리뷰</div>
                         {m.references.map((ref, idx) => (
-                          <div key={idx} className="reference-content">"{ref}"</div>
+                          <div key={idx} className="reference-content">&quot;{ref}&quot;</div>
                         ))}
                       </div>
                     )}
